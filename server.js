@@ -13,9 +13,8 @@ io.on('connection', function(socket) {
     socket.emit('greeting', {msg: counter});
     socket.on('inc', function(data) {
         data.data++;
-        counter++;
-        socket.emit('cnt', data);
-        socket.broadcast.emit('cnt', data);
+        counter++
+        io.emit('cnt', data)
     });
 });
 
