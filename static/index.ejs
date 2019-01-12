@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>epic button</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        <script type = "text/javascript">
+            $(document).ready(function(){
+                var socket = io();
+                socket.on('greeting', function(data) {
+                    document.getElementById("count").innerHTML = data.msg;
+                })
+
+                $("#plus").click(function(e){
+                    e.preventDefault();
+                    c = document.getElementById("count").innerHTML;
+                    socket.emit('inc', {data: c});
+                })
+
+                $("#reset").click(function(e){
+                    e.preventDefault();
+                    c = -1;
+                    socket.emit('inc', {data: c});
+                })
+
+                socket.on('cnt', function(data) {
+                    document.getElementById("count").innerHTML = data.data;
+                })
+            })
+        </script>
+    </head>
+    <body>
+        <h2>This button has been pushed <span id="count"></span> time(s)</h2>
+        <p>Push the button to update the count!</p>
+        <input type="button" id="plus" value="Push the epic button">
+        <input type="button" id="reset" value="reset">
+    </body>
+</html>
